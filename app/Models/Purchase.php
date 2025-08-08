@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Supplier;
+use App\Models\User;
 
 class Purchase extends Model
 {
     use HasFactory;
 
     /**
-     * fillable
+     * Atribut yang dapat diisi secara massal.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'supplier_id',
@@ -22,7 +24,10 @@ class Purchase extends Model
     ];
 
     /**
-     * Relasi ke model Supplier
+     * Relasi ke model Supplier.
+     * Setiap pembelian dimiliki oleh satu supplier.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function supplier()
     {
@@ -30,7 +35,10 @@ class Purchase extends Model
     }
 
     /**
-     * Relasi ke model User
+     * Relasi ke model User.
+     * Setiap pembelian dilakukan oleh satu user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {

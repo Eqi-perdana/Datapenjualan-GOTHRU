@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit Purchase - SantriKoding.com</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body style="background: lightgray">
+<body style="background-color: #f8f9fa;">
 
     <div class="container mt-5 mb-5">
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
                 <div class="card border-0 shadow-sm rounded">
+                    <div class="card-header bg-warning text-dark fw-bold">
+                        Edit Purchase
+                    </div>
                     <div class="card-body">
                         <form action="{{ route('purchases.update', $purchase->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 
-                            <div class="form-group mb-3">
-                                <label class="font-weight-bold">SUPPLIER</label>
-                                <select name="supplier_id" class="form-control @error('supplier_id') is-invalid @enderror">
+                            {{-- Supplier --}}
+                            <div class="mb-3">
+                                <label for="supplier_id" class="form-label">Supplier</label>
+                                <select name="supplier_id" id="supplier_id" class="form-select @error('supplier_id') is-invalid @enderror">
                                     <option value="">-- Pilih Supplier --</option>
                                     @foreach($suppliers as $supplier)
                                         <option value="{{ $supplier->id }}" {{ old('supplier_id', $purchase->supplier_id) == $supplier->id ? 'selected' : '' }}>
@@ -29,13 +32,16 @@
                                     @endforeach
                                 </select>
                                 @error('supplier_id')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label class="font-weight-bold">USER</label>
-                                <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
+                            {{-- User --}}
+                            <div class="mb-3">
+                                <label for="user_id" class="form-label">User</label>
+                                <select name="user_id" id="user_id" class="form-select @error('user_id') is-invalid @enderror">
                                     <option value="">-- Pilih User --</option>
                                     @foreach($users as $user)
                                         <option value="{{ $user->id }}" {{ old('user_id', $purchase->user_id) == $user->id ? 'selected' : '' }}>
@@ -44,36 +50,52 @@
                                     @endforeach
                                 </select>
                                 @error('user_id')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label class="font-weight-bold">TANGGAL PEMBELIAN</label>
-                                <input type="date" class="form-control @error('purchase_date') is-invalid @enderror" name="purchase_date" value="{{ old('purchase_date', $purchase->purchase_date) }}">
+                            {{-- Purchase Date --}}
+                            <div class="mb-3">
+                                <label for="purchase_date" class="form-label">Tanggal Pembelian</label>
+                                <input type="date" id="purchase_date" name="purchase_date" class="form-control @error('purchase_date') is-invalid @enderror" value="{{ old('purchase_date', $purchase->purchase_date) }}">
                                 @error('purchase_date')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label class="font-weight-bold">TOTAL PEMBELIAN</label>
-                                <input type="number" class="form-control @error('total_amount') is-invalid @enderror" name="total_amount" value="{{ old('total_amount', $purchase->total_amount) }}" placeholder="Masukkan Total Pembelian">
+                            {{-- Total Amount --}}
+                            <div class="mb-3">
+                                <label for="total_amount" class="form-label">Total Pembelian (Rp)</label>
+                                <input type="number" id="total_amount" name="total_amount" class="form-control @error('total_amount') is-invalid @enderror" value="{{ old('total_amount', $purchase->total_amount) }}" placeholder="Masukkan Total Pembelian">
                                 @error('total_amount')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-md btn-primary me-3">UPDATE</button>
-                            <button type="reset" class="btn btn-md btn-warning">RESET</button>
-
-                        </form> 
+                            {{-- Buttons --}}
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ route('purchases.index') }}" class="btn btn-outline-secondary">
+                                    ← Kembali
+                                </a>
+                                <div>
+                                    <button type="reset" class="btn btn-warning me-2">Reset</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

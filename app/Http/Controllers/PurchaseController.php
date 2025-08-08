@@ -5,106 +5,106 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\User;
-
-use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PurchaseController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar data pembelian.
      */
     public function index(): View
     {
-        $purchases = Purchase::with(['supplier', 'user'])->latest()->paginate(10);
+        $purchases = Purchase::with(['supplier', 'user'])
+            ->latest()
+            ->paginate(10);
+
         return view('purchases.index', compact('purchases'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan form untuk membuat data pembelian baru.
      */
     public function create(): View
     {
         $suppliers = Supplier::all();
         $users = User::all();
+
         return view('purchases.create', compact('suppliers', 'users'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan data pembelian baru ke database.
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'supplier_id'   => 'required|exists:suppliers,id',
             'user_id'       => 'required|exists:users,id',
             'purchase_date' => 'required|date',
-            'total_amount'  => 'required|numeric',
+            'total_amount'  => 'required|numeric|min:0',
         ]);
 
-        Purchase::create([
-            'supplier_id'   => $request->supplier_id,
-            'user_id'       => $request->user_id,
-            'purchase_date' => $request->purchase_date,
-            'total_amount'  => $request->total_amount,
-        ]);
+        Purchase::create($validated);
 
-        return redirect()->route('purchases.index')->with(['success' => 'Data Pembelian Berhasil Disimpan!']);
+        return redirect()
+            ->route('purchases.index')
+            ->with('success', 'Data pembelian berhasil disimpan!');
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan detail dari data pembelian tertentu.
      */
-    public function show(string $id): View
+    public function show(int $id): View
     {
         $purchase = Purchase::with(['supplier', 'user'])->findOrFail($id);
+
         return view('purchases.show', compact('purchase'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan form untuk mengedit data pembelian.
      */
-    public function edit(string $id): View
+    public function edit(int $id): View
     {
         $purchase = Purchase::findOrFail($id);
         $suppliers = Supplier::all();
         $users = User::all();
+
         return view('purchases.edit', compact('purchase', 'suppliers', 'users'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui data pembelian tertentu di database.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'supplier_id'   => 'required|exists:suppliers,id',
             'user_id'       => 'required|exists:users,id',
             'purchase_date' => 'required|date',
-            'total_amount'  => 'required|numeric',
+            'total_amount'  => 'required|numeric|min:0',
         ]);
 
         $purchase = Purchase::findOrFail($id);
+        $purchase->update($validated);
 
-        $purchase->update([
-            'supplier_id'   => $request->supplier_id,
-            'user_id'       => $request->user_id,
-            'purchase_date' => $request->purchase_date,
-            'total_amount'  => $request->total_amount,
-        ]);
-
-        return redirect()->route('purchases.index')->with(['success' => 'Data Pembelian Berhasil Diubah!']);
+        return redirect()
+            ->route('purchases.index')
+            ->with('success', 'Data pembelian berhasil diperbarui!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus data pembelian dari database.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $purchase = Purchase::findOrFail($id);
         $purchase->delete();
 
-        return redirect()->route('purchases.index')->with(['success' => 'Data Pembelian Berhasil Dihapus!']);
+        return redirect()
+            ->route('purchases.index')
+            ->with('success', 'Data pembelian berhasil dihapus!');
     }
 }
