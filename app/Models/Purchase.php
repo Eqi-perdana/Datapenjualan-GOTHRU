@@ -9,11 +9,6 @@ class Purchase extends Model
 {
     use HasFactory;
 
-    /**
-     * fillable
-     *
-     * @var array
-     */
     protected $fillable = [
         'supplier_id',
         'user_id',
@@ -21,19 +16,13 @@ class Purchase extends Model
         'total_amount',
     ];
 
-    /**
-     * Relasi ke model Supplier
-     */
-    public function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
-    }
+   public function supplier()
+{
+    return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+}
 
-    /**
-     * Relasi ke model User
-     */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -21,4 +21,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'id_category');
     }
+
+    // app/Models/Product.php
+    public function ProductPriceHistories()
+    {
+        return $this->hasMany(ProductPriceHistory::class, 'product_id');
+    }
 }

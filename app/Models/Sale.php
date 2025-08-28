@@ -19,8 +19,11 @@ class Sale extends Model
         'sale_date',
         'total_amount',
         'payment_method',
-        'created_at',
-        'updated_at',
     ];
+
+    public function user()
+{
+    return $this->belongsTo(User::class);
 }
 
+}

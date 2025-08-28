@@ -9,19 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+   public function up(): void
 {
     Schema::create('sales', function (Blueprint $table) {
-        $table->id(); // bigint(20)
-        $table->unsignedBigInteger('user_id'); // relasi ke users
-        $table->date('sale_date'); // tanggal penjualan
-        $table->decimal('total_amount', 15, 2); // total
-        $table->enum('payment_method', ['cash', 'transfer', 'qris']); // enum metode pembayaran
-        $table->timestamp('created_at')->useCurrent(); // waktu dibuat
-        $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate(); // waktu diubah
+        $table->id(); // id bigint [pk, increment]
+        $table->unsignedBigInteger('user_id'); // user_id bigint
+        $table->date('sale_date'); // sale_date date
+        $table->decimal('total_amount', 15, 2); // total_amount decimal(15,2)
+        $table->enum('payment_method', ['cash', 'transfer', 'qris']); // enum
+        $table->timestamps(); // created_at & updated_at
 
-        // Optional: foreign key
-        // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        // Foreign key ke tabel users
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });
 }
 
@@ -34,4 +33,3 @@ return new class extends Migration
         Schema::dropIfExists('sales');
     }
 };
-
