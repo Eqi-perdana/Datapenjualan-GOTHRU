@@ -21,7 +21,7 @@
     <div class="col-md-3">
         <div class="card mb-3 text-white" style="background-color:lightgreen;">
             <div class="card-body">
-                <h5 class="card-title">Suppliers</h5>
+                <h5 class="card-title">Pemasok</h5>
                 <p class="mb-0"><strong>{{ $suppliers }} Data</strong></p>
             </div>
         </div>
@@ -29,7 +29,7 @@
     <div class="col-md-3">
         <div class="card mb-3 text-white" style="background-color:lightblue;">
             <div class="card-body">
-                <h5 class="card-title">Products</h5>
+                <h5 class="card-title">Product</h5>
                 <p class="mb-0"><strong>{{ $products }} Data</strong></p>
             </div>
         </div>
@@ -37,7 +37,7 @@
     <div class="col-md-3">
         <div class="card mb-3 text-white" style="background-color:grey;">
             <div class="card-body">
-                <h5 class="card-title">Purchases</h5>
+                <h5 class="card-title">Pembelian</h5>
                 <p class="mb-0"><strong>{{ $purchases }} Data</strong></p>
             </div>
         </div>
@@ -48,7 +48,7 @@
     <div class="col-md-3">
         <div class="card mb-3 text-white" style="background-color:gold;">
             <div class="card-body">
-                <h5 class="card-title">Sales</h5>
+                <h5 class="card-title">Penjualan</h5>
                 <p class="mb-0"><strong>{{ $sales }} Data</strong></p>
             </div>
         </div>
@@ -56,14 +56,14 @@
     <div class="col-md-3">
         <div class="card mb-3 text-white" style="background-color:teal;">
             <div class="card-body">
-                <h5 class="card-title">Product History</h5>
+                <h5 class="card-title">History</h5>
                 <p class="mb-0"><strong>{{ $histories }} Data</strong></p>
             </div>
         </div>
     </div>
 </div>
 
-{{-- Diagram Statistik --}}
+{{-- Diagram Statistik Bar --}}
 <div class="row mt-4">
     <div class="col-md-12">
         <div class="card shadow-sm">
@@ -76,11 +76,11 @@
 </div>
 @endsection
 
-
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    // Chart Bar
     const ctx = document.getElementById('dashboardChart').getContext('2d');
-
     new Chart(ctx, {
         type: 'bar',
         data: {
