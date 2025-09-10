@@ -12,13 +12,17 @@ return new class extends Migration
    public function up(): void
 {
     Schema::create('purchases', function (Blueprint $table) {
-        $table->id(); // id bigint [pk, increment]
-        $table->foreignId('supplier_id')->constrained('suppliers'); // supplier_id bigint [ref: > suppliers.id]
-        $table->foreignId('user_id')->constrained('users'); // user_id bigint [ref: > users.id]
-        $table->date('purchase_date'); // purchase_date date
-        $table->decimal('total_amount', 15, 2); // total_amount decimal(15,2)
-        $table->timestamps(); // created_at & updated_at timestamp
-    });
+    $table->id();
+    $table->unsignedBigInteger('supplier_id');
+    $table->unsignedBigInteger('user_id');
+    $table->dateTime('purchase_date');
+    $table->decimal('total_amount', 15, 2);
+    $table->timestamps();
+
+    $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
+    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+});
+
 }
 
 

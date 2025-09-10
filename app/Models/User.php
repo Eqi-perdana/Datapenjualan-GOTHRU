@@ -11,22 +11,19 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Kolom yang bisa diisi massal.
      *
      * @var array<int, string>
      */
     protected $fillable = [
         'name',
         'email',
-        'email_verified_at',
         'password',
-        'remember_token',
-        'created_at',
-        'updated_at',
+        'role', // contoh: admin, karyawan, kasir
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Kolom yang disembunyikan saat array/JSON.
      *
      * @var array<int, string>
      */
@@ -36,7 +33,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Cast atribut.
      *
      * @var array<string, string>
      */
@@ -44,4 +41,3 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 }
-

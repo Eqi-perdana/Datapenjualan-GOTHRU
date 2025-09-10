@@ -10,19 +10,16 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('stock_logs', function (Blueprint $table) {
-        $table->id(); // bigint(20)
-        $table->unsignedBigInteger('product_id'); // relasi ke produk
-        $table->enum('change_type', ['in', 'out']); // jenis perubahan
-        $table->integer('quantity'); // jumlah perubahan stok
-        $table->text('description')->nullable(); // keterangan opsional
-        $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate(); // waktu update
-
-        // Optional: foreign key
-        // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-    });
-}
+    {
+        Schema::create('stock_logs', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->enum('change_type', ['in', 'out']);
+            $table->integer('quantity');
+            $table->text('description')->nullable();
+            $table->timestamps(); // ⬅ ini tambahkan (created_at & updated_at)
+        });
+    }
 
 
     /**

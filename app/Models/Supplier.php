@@ -9,14 +9,15 @@ class Supplier extends Model
 {
     use HasFactory;
 
-    /**
-     * Kolom yang boleh diisi (mass assignment).
-     *
-     * @var array
-     */
     protected $fillable = [
         'name_suppliers',
         'contact',
         'address',
     ];
+
+    // app/Models/Supplier.php
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class, 'supplier_id', 'id');
+    }
 }

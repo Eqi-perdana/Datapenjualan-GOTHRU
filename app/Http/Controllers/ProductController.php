@@ -7,12 +7,16 @@ use App\Models\Category;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     public function index(): View
     {
-        $products = Product::with('category')->latest()->paginate(10);
+        $products = Product::with('category')
+            ->orderBy('id', 'asc')
+            ->paginate(10);
+
         return view('products.index', compact('products'));
     }
 
@@ -34,9 +38,28 @@ class ProductController extends Controller
             'selling_price' => 'required|numeric|min:0',
         ]);
 
+        // Simpan produk baru (ID akan otomatis ikut AUTO_INCREMENT)
         Product::create($request->all());
 
+        // Urutkan ulang ID agar rapi setelah insert
+        $products = Product::orderBy('id')->get();
+        $newId = 1;
+
+        foreach ($products as $prod) {
+            DB::table('products')->where('id', $prod->id)->update(['id' => $newId]);
+            $newId++;
+        }
+
+        // Reset AUTO_INCREMENT
+        $maxId = DB::table('products')->max('id') ?? 0;
+        DB::statement("ALTER TABLE products AUTO_INCREMENT = " . ($maxId + 1));
+
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
+    }
+
+    public function show(Product $product): View
+    {
+        return view('products.show', compact('product'));
     }
 
     public function edit(Product $product): View
@@ -64,7 +87,22 @@ class ProductController extends Controller
 
     public function destroy(Product $product): RedirectResponse
     {
+        // Hapus produk
         $product->delete();
+
+        // Urutkan ulang ID agar rapi
+        $products = Product::orderBy('id')->get();
+        $newId = 1;
+
+        foreach ($products as $prod) {
+            DB::table('products')->where('id', $prod->id)->update(['id' => $newId]);
+            $newId++;
+        }
+
+        // Reset AUTO_INCREMENT
+        $maxId = DB::table('products')->max('id') ?? 0;
+        DB::statement("ALTER TABLE products AUTO_INCREMENT = " . ($maxId + 1));
+
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
 }

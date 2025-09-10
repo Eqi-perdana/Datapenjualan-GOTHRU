@@ -7,23 +7,21 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi.
      */
     public function up(): void
-{
-    Schema::create('suppliers', function (Blueprint $table) {
-        $table->id(); // bigint(20)
-        $table->string('name_suppliers', 225); // nama supplier
-        $table->string('contact', 225); // nomor telepon atau email
-        $table->text('address')->nullable(); // alamat, bisa kosong
-        $table->timestamp('created_at')->useCurrent(); // waktu dibuat
-        $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate(); // waktu update
-    });
-}
-
+    {
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->id(); // Primary key (bigint unsigned auto increment)
+            $table->string('name_suppliers', 225); // Nama supplier
+            $table->string('contact', 225); // Nomor telepon atau email
+            $table->text('address')->nullable(); // Alamat, bisa kosong
+            $table->timestamps(); // created_at & updated_at otomatis
+        });
+    }
 
     /**
-     * Reverse the migrations.
+     * Reverse / rollback migrasi.
      */
     public function down(): void
     {
