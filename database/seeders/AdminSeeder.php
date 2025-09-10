@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
-            'password' => Hash::make('123456'), // password di-hash
+            'password' => Hash::make('password'), // password di-hash
             'role' => 'admin', // hapus kalau kolom role tidak ada
         ]);
     }

@@ -1,81 +1,52 @@
-{{-- resources/views/sales/create.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Add New Sale')
-
 @section('content')
-<div class="container mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card border-0 shadow-sm rounded">
-                <div class="card-body">
-                    <form action="{{ route('sales.store') }}" method="POST">
-                        @csrf
+<div class="container">
+    <h3>Tambah Penjualan</h3>
 
-                        <div class="form-group mb-3">
-                            <label class="font-weight-bold">USER</label>
-                            <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
-                                <option value="">-- Pilih User --</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                        {{ $user->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('user_id')
-                                <div class="alert alert-danger mt-2">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label class="font-weight-bold">SALE DATE</label>
-                            <input type="date" class="form-control @error('sale_date') is-invalid @enderror" 
-                                   name="sale_date" value="{{ old('sale_date') }}">
-                            @error('sale_date')
-                                <div class="alert alert-danger mt-2">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label class="font-weight-bold">TOTAL AMOUNT</label>
-                            <input type="number" step="0.01" 
-                                   class="form-control @error('total_amount') is-invalid @enderror" 
-                                   name="total_amount" value="{{ old('total_amount') }}" 
-                                   placeholder="Masukkan Total Penjualan">
-                            @error('total_amount')
-                                <div class="alert alert-danger mt-2">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label class="font-weight-bold">PAYMENT METHOD</label>
-                            <select name="payment_method" class="form-control @error('payment_method') is-invalid @enderror">
-                                <option value="">-- Pilih Metode Pembayaran --</option>
-                                <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Cash</option>
-                                <option value="transfer" {{ old('payment_method') == 'transfer' ? 'selected' : '' }}>Transfer</option>
-                                <option value="qris" {{ old('payment_method') == 'qris' ? 'selected' : '' }}>QRIS</option>
-                            </select>
-                            @error('payment_method')
-                                <div class="alert alert-danger mt-2">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        <button type="submit" class="btn btn-md btn-primary me-3">SAVE</button>
-                        <button type="reset" class="btn btn-md btn-warning">RESET</button>
-
-                        <a href="{{ route('sales.index') }}" class="btn btn-md btn-secondary">KEMBALI</a>
-                    </form> 
-                </div>
-            </div>
+    <form action="{{ route('sales.store') }}" method="POST">
+        @csrf
+        <div class="mb-3">
+            <label for="user_id">Pengguna</label>
+            <select name="user_id" class="form-control" required>
+                <option value="">-- Pilih Pengguna --</option>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @endforeach
+            </select>
         </div>
-    </div>
+
+        <div class="mb-3">
+            <label for="product_id">Product</label>
+            <select name="product_id" class="form-control" required>
+                <option value="">-- Pilih Produk --</option>
+                @foreach($products as $product)
+                    <option value="{{ $product->id }}">{{ $product->name_product }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="sale_date">Tanggal Penjualan</label>
+            <input type="date" name="sale_date" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="total_amount">Jumlah Total</label>
+            <input type="number" name="total_amount" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="payment_method">Metode Pembayaran</label>
+            <select name="payment_method" class="form-control" required>
+                <option value="cash">Cash</option>
+                <option value="transfer">Transfer</option>
+                <option value="qris">QRIS</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Simpan</button>
+        <a href="{{ route('sales.index') }}" class="btn btn-secondary">Kembali</a>
+    </form>
 </div>
 @endsection

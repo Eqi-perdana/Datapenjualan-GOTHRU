@@ -14,6 +14,13 @@ class SupplierController extends Controller
         return view('suppliers.index', compact('suppliers'));
     }
 
+    public function indexKaryawan()
+{
+    $suppliers = Supplier::all();
+    return view('karyawan.pemasok.index', compact('suppliers'));
+}
+
+
     // Menampilkan form untuk create supplier
     public function create()
     {

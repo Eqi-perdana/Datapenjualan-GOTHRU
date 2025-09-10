@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Purchase - SantriKoding.com')
+@section('title', 'Edit Pembelian')
 
 @section('content')
 <div class="container mt-5 mb-5">

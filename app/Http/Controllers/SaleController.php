@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sale;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -15,7 +16,7 @@ class SaleController extends Controller
      */
     public function index(): View
     {
-        $sales = Sale::with('user')->latest()->paginate(10);
+        $sales = Sale::with(['product', 'user'])->latest()->paginate(10);
         return view('sales.index', compact('sales'));
     }
 
@@ -25,7 +26,8 @@ class SaleController extends Controller
     public function create(): View
     {
         $users = User::all();
-        return view('sales.create', compact('users'));
+        $products = Product::select('id', 'name_product')->get(); // ✅ pakai name_product
+        return view('sales.create', compact('products', 'users'));
     }
 
     /**
@@ -35,12 +37,19 @@ class SaleController extends Controller
     {
         $request->validate([
             'user_id'        => 'required|exists:users,id',
+            'product_id'     => 'required|exists:products,id', // ✅ ubah jadi product_id
             'sale_date'      => 'required|date',
             'total_amount'   => 'required|numeric',
             'payment_method' => 'required|in:cash,transfer,qris',
         ]);
 
-        Sale::create($request->only('user_id', 'sale_date', 'total_amount', 'payment_method'));
+        Sale::create([
+            'user_id'        => $request->user_id,
+            'product_id'     => $request->product_id, // ✅ konsisten
+            'sale_date'      => $request->sale_date,
+            'total_amount'   => $request->total_amount,
+            'payment_method' => $request->payment_method,
+        ]);
 
         return redirect()->route('sales.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
@@ -50,7 +59,7 @@ class SaleController extends Controller
      */
     public function show(string $id): View
     {
-        $sale = Sale::with('user')->findOrFail($id);
+        $sale = Sale::with(['product', 'user'])->findOrFail($id);
         return view('sales.show', compact('sale'));
     }
 
@@ -61,7 +70,8 @@ class SaleController extends Controller
     {
         $sale = Sale::findOrFail($id);
         $users = User::all();
-        return view('sales.edit', compact('sale', 'users'));
+        $products = Product::select('id', 'name_product')->get();
+        return view('sales.edit', compact('sale', 'users', 'products'));
     }
 
     /**
@@ -71,6 +81,7 @@ class SaleController extends Controller
     {
         $request->validate([
             'user_id'        => 'required|exists:users,id',
+            'product_id'     => 'required|exists:products,id',
             'sale_date'      => 'required|date',
             'total_amount'   => 'required|numeric',
             'payment_method' => 'required|in:cash,transfer,qris',
@@ -78,7 +89,13 @@ class SaleController extends Controller
 
         $sale = Sale::findOrFail($id);
 
-        $sale->update($request->only('user_id', 'sale_date', 'total_amount', 'payment_method'));
+        $sale->update([
+            'user_id'        => $request->user_id,
+            'product_id'     => $request->product_id,
+            'sale_date'      => $request->sale_date,
+            'total_amount'   => $request->total_amount,
+            'payment_method' => $request->payment_method,
+        ]);
 
         return redirect()->route('sales.index')->with(['success' => 'Data Berhasil Diubah!']);
     }

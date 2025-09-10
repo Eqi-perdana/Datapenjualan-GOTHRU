@@ -12,15 +12,17 @@ return new class extends Migration
    public function up(): void
 {
     Schema::create('sales', function (Blueprint $table) {
-        $table->id(); // id bigint [pk, increment]
-        $table->unsignedBigInteger('user_id'); // user_id bigint
-        $table->date('sale_date'); // sale_date date
-        $table->decimal('total_amount', 15, 2); // total_amount decimal(15,2)
-        $table->enum('payment_method', ['cash', 'transfer', 'qris']); // enum
-        $table->timestamps(); // created_at & updated_at
+        $table->id();
+        $table->unsignedBigInteger('user_id'); 
+        $table->unsignedBigInteger('product_id'); // ✅ ganti dari name_product ke product_id
+        $table->date('sale_date');
+        $table->decimal('total_amount', 15, 2);
+        $table->enum('payment_method', ['cash', 'transfer', 'qris']);
+        $table->timestamps();
 
-        // Foreign key ke tabel users
+        // Foreign keys
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
     });
 }
 

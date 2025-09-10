@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Data Purchases - SantriKoding.com')
+@section('title', 'Data Pembelian')
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div>
-                <h3 class="text-center my-4">DATA PURCHASES</h3>
+                <h3 class="text-center my-4">DATA PEMBELIAN</h3>
                 <hr>
             </div>
             <div class="card border-10 shadow-sm rounded">

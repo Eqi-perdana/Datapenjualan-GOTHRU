@@ -11,6 +11,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ProductPriceHistoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StocklogController;
 
 // resource routes
 Route::resource('/products', ProductController::class);
@@ -19,6 +20,8 @@ Route::resource('/suppliers', SupplierController::class);
 Route::resource('/sales', SaleController::class);
 Route::resource('/purchases', PurchaseController::class);
 Route::resource('/product_price_history', ProductPriceHistoryController::class);
+Route::resource('/stocklogs', StocklogController::class);
+
 
 // ✅ Dashboard route (pakai controller + auth middleware)
 Route::middleware('auth')->group(function () {

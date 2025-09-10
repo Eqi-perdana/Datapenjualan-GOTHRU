@@ -56,10 +56,16 @@ class ProductPriceHistoryController extends Controller
      * Tampilkan detail histori harga
      */
     public function show($id)
-    {
-        $history = ProductPriceHistory::with(['product', 'changedBy'])->findOrFail($id);
-        return view('product_price_history.show', compact('history'));
-    }
+{
+    // ambil data histori yang diminta
+    $history = ProductPriceHistory::with(['product', 'changedBy'])->findOrFail($id);
+
+    // hitung nomor urutnya
+    $nomorUrut = ProductPriceHistory::orderBy('id')->pluck('id')->search($history->id) + 1;
+
+    return view('product_price_history.show', compact('history', 'nomorUrut'));
+}
+
 
     /**
      * Tampilkan form edit histori harga

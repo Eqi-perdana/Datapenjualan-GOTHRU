@@ -23,8 +23,13 @@ class Product extends Model
     }
 
     // app/Models/Product.php
-    public function ProductPriceHistories()
+    public function PriceHistories()
     {
-        return $this->hasMany(ProductPriceHistory::class, 'product_id');
+        return $this->hasMany(ProductPriceHistory::class);
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
     }
 }
