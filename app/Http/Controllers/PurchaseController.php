@@ -9,6 +9,7 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
@@ -18,10 +19,23 @@ class PurchaseController extends Controller
         return view('purchases.index', compact('purchases'));
     }
 
-    public function create(): View
+   public function create(): View
     {
         $suppliers = Supplier::orderBy('name_suppliers', 'asc')->get();
-        $users = User::orderBy('name', 'asc')->get();
+
+        // 🔎 Filter user berdasarkan role
+        if (Auth::user()->role === 'admin') {
+            // admin bisa memilih admin + karyawan
+            $users = User::whereIn('role', ['admin', 'karyawan'])
+                        ->orderBy('name', 'asc')
+                        ->get();
+        } else {
+            // karyawan hanya bisa memilih karyawan
+            $users = User::where('role', 'karyawan')
+                        ->orderBy('name', 'asc')
+                        ->get();
+        }
+
         return view('purchases.create', compact('suppliers', 'users'));
     }
 

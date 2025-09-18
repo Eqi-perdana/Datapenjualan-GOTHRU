@@ -81,7 +81,7 @@
     {{-- Filter --}}
     <div class="row mt-4">
         <div class="col-md-5">
-            <form method="GET" action="{{ route('penjualan.dashboard') }}" class="form-inline mb-3">
+            <form method="GET" action="{{ route('dashboard') }}" class="form-inline mb-3">
                 <label class="mr-2">Tahun:</label>
                 <select name="year" class="form-control mr-2" onchange="this.form.submit()">
                     @foreach ($years as $y)
@@ -117,17 +117,21 @@
         </div>
     </div>
 
-    {{-- Grafik --}}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-center">{{ $chartTitle ?? 'Statistik Penjualan' }}</h5>
-                    <canvas id="salesChart" height="100"></canvas>
+   {{-- Grafik --}}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white text-center">
+                <h5 class="mb-0">{{ $chartTitle ?? 'Statistik Penjualan' }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container" style="position: relative; height:40vh; width:100%; overflow-x:auto;">
+                    <canvas id="salesChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     {{-- Tabel Ringkasan --}}
     <div class="row mt-4">
