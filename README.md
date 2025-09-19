@@ -185,5 +185,6 @@ MIT License © 2025 — PKL GOTHRU
 ## 📬 Kontak
 
 Dibuat oleh tim PKL **GOTHRU** (Eqi, Azhar, Tegar). Untuk pertanyaan atau demo, buka Issues atau hubungi via GitHub.
+Bisa menghubungi melalui Whatsaapp juga : 083184136574 ini untuk no whatsaap nya
 
 ---
