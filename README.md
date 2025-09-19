@@ -50,13 +50,13 @@ Anggota:
 
 ## 🛠️ Teknologi
 
-| Bagian   | Teknologi                          |
-| -------- | ---------------------------------- |
-| Backend  | Laravel 12, Eloquent ORM           |
-| Frontend | Blade, Bootstrap 5, Chart.js       |
-| Database | MySQL / MariaDB                    |
-| Tools    | Composer, NPM, Carbon, Breeze Auth,|
-           | Viscode, dan github                |
+| Bagian   | Teknologi                                              |
+| -------- | ------------------------------------------------------ |
+| Backend  | Laravel 12, Eloquent ORM                               |
+| Frontend | Blade, Bootstrap 5, Chart.js                           |
+| Database | MySQL / MariaDB                                        |
+| Tools    | Composer, NPM, Carbon, Breeze Auth,Viscode, dan github |
+                        
 ---
 
 ## 🖼️ Foto & GIF (petunjuk)
@@ -186,41 +186,17 @@ Buka: `http://127.0.0.1:8000`
 
 ## 👥 Role & Hak Akses
 
-| Role         | Hak Akses                                                            |
-| ------------ | -------------------------------------------------------------------- |
-| **Admin**    | CRUD Produk, Kategori, Supplier, User, Penjualan, Pembelian, Laporan |
-| **Karyawan** | Input Penjualan & Pembelian, Lihat Data Produk                       |
+| Role         | Hak Akses                                                                                    |
+| ------------ | -------------------------------------------------------------------------------------------- |
+| **Admin**    | CRUD Produk, Kategori, Supplier, User, Penjualan, Pembelian, Stocklog, Product Harga Histori |
+| **Karyawan** | Input Penjualan & Pembelian, Lihat Data Produk                                               |
 
 ---
 
-## 📸 Contoh Penempatan Foto di README
-
-Berikut contoh markup yang rapi untuk menampilkan beberapa gambar secara responsif:
-
-```html
-<p align="center">
-  <img src="docs/images/logo.png" alt="Logo" width="120" />
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/dashboard.png" alt="Dashboard" width="600" />
-</p>
-
-<div align="center">
-  <img src="docs/screenshots/login.gif" alt="Login Demo" width="300" />
-  <img src="docs/screenshots/sales.gif" alt="Sales Demo" width="300" />
-</div>
-
-<p align="center">
-  <img src="docs/images/team.jpg" alt="Team GOTHRU" width="600" />
-</p>
-```
-
----
 
 ## 🤝 Kontribusi
 
-Fork repository → buat branch fitur → pull request. Sertakan deskripsi jelas & screenshot jika ada perubahan UI.
+repo ini di colaborasi supaya mempermudah kelompok untuk mengakses reponya dan bisa menambahkan atau mengedit repo nya juga
 
 ---
 
