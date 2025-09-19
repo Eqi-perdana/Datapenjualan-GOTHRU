@@ -178,12 +178,12 @@ repo ini di colaborasi supaya mempermudah kelompok untuk mengakses reponya dan b
 
 ## 📄 Lisensi
 
-MIT License © 2025 — GOTHRU
+MIT License © 2025 — PKL GOTHRU
 
 ---
 
 ## 📬 Kontak
 
-Dibuat oleh tim **GOTHRU** (Eqi, Azhar, Tegar). Untuk pertanyaan atau demo, buka Issues atau hubungi via GitHub.
+Dibuat oleh tim PKL **GOTHRU** (Eqi, Azhar, Tegar). Untuk pertanyaan atau demo, buka Issues atau hubungi via GitHub.
 
 ---
