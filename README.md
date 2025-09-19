@@ -1,9 +1,9 @@
 # 🚀 GOTHRU — Aplikasi Penjualan
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Laravel-10-red?logo=laravel" alt="Laravel" />
+  <img src="https://img.shields.io/badge/Laravel-12-red?logo=laravel" alt="Laravel" />
   <img src="https://img.shields.io/badge/Database-MySQL-blue?logo=mysql" alt="MySQL" />
-  <img src="https://img.shields.io/badge/Frontend-Bootstrap-5-563d7c?logo=bootstrap" alt="Bootstrap" />
+  <img src="https://img.shields.io/badge/Frontend-Bootstrap_5-563d7c?logo=bootstrap&logoColor=white" alt="Bootstrap" />
   <img src="https://img.shields.io/badge/License-MIT-green" alt="License" />
   <img src="https://img.shields.io/badge/Status-Active-success" alt="Status" />
 </p>
@@ -20,15 +20,6 @@ Anggota:
 
 ---
 
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=3B82F6&center=true&vCenter=true&width=600&lines=Selamat+Datang+di+Aplikasi+Penjualan;Kelola+Produk%2C+Pembelian%2C+Penjualan+dengan+Mudah;Role+%3A+Admin+dan+Karyawan" alt="Typing SVG" />
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/demo.gif" alt="Demo Aplikasi" width="700">
-</p>
-
----
 
 
 ## ✨ Ringkasan
