@@ -11,7 +11,7 @@
                     <h3 class="mb-3">Detail Pembelian</h3>
                     <hr />
                     <div class="mb-3">
-                        <strong>Supplier:</strong>
+                        <strong>PEMASOK:</strong>
                         <p>{{ $purchase->supplier->name_suppliers ?? '-' }}</p>
                     </div>
                     <div class="mb-3">

@@ -11,10 +11,10 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ProductPriceHistoryController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KaryawanDashboardController;
 use App\Http\Controllers\StocklogController;
 
 // resource routes
+Route::middleware(['auth'])->group(function () {
 Route::resource('/products', ProductController::class);
 Route::resource('/categories', CategoryController::class);
 Route::resource('/suppliers', SupplierController::class);
@@ -22,7 +22,7 @@ Route::resource('/sales', SaleController::class);
 Route::resource('/purchases', PurchaseController::class);
 Route::resource('/product_price_history', ProductPriceHistoryController::class);
 Route::resource('/stocklogs', StocklogController::class);
-
+});
 
 // Dashboard Admin
    Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -31,8 +31,12 @@ Route::resource('/stocklogs', StocklogController::class);
 
 // // Dashboard Karyawan
 //     Route::get('/dashboard', [KaryawanDashboardController::class, 'index'])
-//         ->name('karyawan.dashboard');
+//     ->name('karyawan.dashboard');
 
+
+    Route::get('/', function () {
+    return view('welcome'); // halaman utama sebelum login
+    });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

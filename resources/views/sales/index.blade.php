@@ -15,9 +15,13 @@
 
             <div class="card border-0 shadow-sm rounded">
                 <div class="card-body">
-                    <a href="{{ route('sales.create') }}" class="btn btn-success btn-sm mb-3">
-                        Tambahkan
-                    </a>
+                    
+                    {{-- Tambah data: boleh admin & karyawan --}}
+                    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'karyawan')
+                        <a href="{{ route('sales.create') }}" class="btn btn-success btn-sm mb-3">
+                            Tambahkan
+                        </a>
+                    @endif
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped align-middle text-center">
@@ -40,17 +44,23 @@
                                         <td>{{ 'Rp ' . number_format($sale->total_amount, 2, ',', '.') }}</td>
                                         <td>{{ ucfirst($sale->payment_method) }}</td>
                                         <td>
-                                            <form action="{{ route('sales.destroy', $sale->id) }}" 
-                                                  method="POST" class="d-inline" 
-                                                  onsubmit="return confirm('Yakin ingin hapus data ini?')">
-                                                <a href="{{ route('sales.show', $sale->id) }}" 
-                                                   class="btn btn-sm btn-secondary">Lihat</a>
+                                            {{-- Semua role bisa lihat --}}
+                                            <a href="{{ route('sales.show', $sale->id) }}" 
+                                               class="btn btn-sm btn-secondary">Lihat</a>
+
+                                            {{-- Edit & Hapus hanya admin --}}
+                                            @if(auth()->user()->role === 'admin')
                                                 <a href="{{ route('sales.edit', $sale->id) }}" 
                                                    class="btn btn-sm btn-primary">Edit</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                            </form>
+
+                                                <form action="{{ route('sales.destroy', $sale->id) }}" 
+                                                      method="POST" class="d-inline" 
+                                                      onsubmit="return confirm('Yakin ingin hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

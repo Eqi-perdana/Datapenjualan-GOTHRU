@@ -183,7 +183,6 @@
     const omzet = @json($omzet);
     const transaksiRaw = @json($transaksi);
 
-    // pastikan jadi angka
     const transaksi = Array.isArray(transaksiRaw) ? transaksiRaw.map(v => Number(v)) : [];
     const omzetArr = Array.isArray(omzet) ? omzet.map(v => Number(v)) : [];
 
@@ -197,29 +196,27 @@
             labels: labels,
             datasets: [
                 {
-                    label: 'Total Omzet (Rp)',
-                    data: omzetArr,
-                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                    yAxisID: 'y1',
-                }
+                    label: 'Jumlah Transaksi',
+                    data: transaksi,
+                    backgroundColor: 'rgba(255, 159, 64, 0.7)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1,
+                    yAxisID: 'y',
+                },
+               
             ]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             interaction: { mode: 'index', intersect: false },
             scales: {
-                // sumbu kiri: jumlah transaksi (integer, max = nilai nyata)
                 y: {
                     beginAtZero: true,
-                    max: maxTrans,         // pastikan tick atas = max transaksi
-                    grace: 0,              // matikan padding otomatis
+                    max: maxTrans,
                     title: { display: true, text: 'Jumlah Transaksi' },
-                    ticks: {
-                        precision: 0,
-                        stepSize: 1         // tick per 1 unit (1,2,3,...)
-                    }
+                    ticks: { precision: 0, stepSize: 1 }
                 },
-                // sumbu kanan: omzet (tetap sesuai data asli)
                 y1: {
                     position: 'right',
                     title: { display: true, text: 'Total Omzet (Rp)' },
@@ -235,7 +232,10 @@
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return context.dataset.label + ': ' + formatRupiah(context.parsed.y);
+                            if (context.dataset.label.includes('Omzet')) {
+                                return context.dataset.label + ': ' + formatRupiah(context.parsed.y);
+                            }
+                            return context.dataset.label + ': ' + context.parsed.y;
                         }
                     }
                 },

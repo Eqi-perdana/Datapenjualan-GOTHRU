@@ -15,9 +15,13 @@
 
             <div class="card border-0 shadow-sm rounded">
                 <div class="card-body">
-                    <a href="{{ route('purchases.create') }}" class="btn btn-success btn-sm mb-3">
-                        Tambahkan
-                    </a>
+
+                    {{-- Tambah data: boleh admin & karyawan --}}
+                    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'karyawan')
+                        <a href="{{ route('purchases.create') }}" class="btn btn-success btn-sm mb-3">
+                            Tambahkan
+                        </a>
+                    @endif
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped align-middle text-center">
@@ -38,17 +42,23 @@
                                         <td>{{ \Carbon\Carbon::parse($purchase->purchase_date)->format('d-m-Y') }}</td>
                                         <td>{{ 'Rp ' . number_format($purchase->total_amount, 2, ',', '.') }}</td>
                                         <td>
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');" 
-                                                  action="{{ route('purchases.destroy', $purchase->id) }}" 
-                                                  method="POST" class="d-inline">
-                                                <a href="{{ route('purchases.show', $purchase->id) }}" 
-                                                   class="btn btn-sm btn-secondary">Lihat</a>
+                                            {{-- Semua role bisa lihat --}}
+                                            <a href="{{ route('purchases.show', $purchase->id) }}" 
+                                               class="btn btn-sm btn-secondary">Lihat</a>
+
+                                            {{-- Edit & Hapus hanya admin --}}
+                                            @if(auth()->user()->role === 'admin')
                                                 <a href="{{ route('purchases.edit', $purchase->id) }}" 
                                                    class="btn btn-sm btn-primary">Edit</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                            </form>
+
+                                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" 
+                                                      action="{{ route('purchases.destroy', $purchase->id) }}" 
+                                                      method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
@@ -63,9 +73,11 @@
                     </div>
 
                     {{-- Pagination --}}
-                    <div class="d-flex justify-content-center mt-3">
-                        {{ $purchases->links() }}
-                    </div>
+                    @if ($purchases->hasPages())
+                        <div class="d-flex justify-content-center mt-3">
+                            {{ $purchases->links() }}
+                        </div>
+                    @endif
                 </div>
             </div>
 
