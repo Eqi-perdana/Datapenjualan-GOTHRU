@@ -59,30 +59,6 @@ Anggota:
                         
 ---
 
-## 🖼️ Foto & GIF (petunjuk)
-
-Untuk menambahkan foto atau GIF ke README:
-
-1. Simpan file gambar/gif di folder repo `docs/screenshots/` atau `docs/images/`.
-
-   * Contoh:
-
-     * `docs/screenshots/demo.gif` (rekaman demo)
-     * `docs/screenshots/dashboard.png` (screenshot dashboard)
-     * `docs/screenshots/login.gif` (login flow sebagai GIF)
-     * `docs/images/team.jpg` (foto tim)
-     * `docs/images/logo.png` (logo aplikasi)
-
-2. Panggil gambar di README dengan markdown:
-
-```markdown
-![Dashboard](docs/screenshots/dashboard.png)
-```
-
-> Tip: kalau GIF berukuran besar, pertimbangkan gunakan Git LFS atau unggah ke layanan hosting gambar (Imgur / Cloud) lalu pakai URL-nya.
-
----
-
 ## 📊 Database (ERD)
 
 ```mermaid
@@ -211,5 +187,3 @@ MIT License © 2025 — GOTHRU
 Dibuat oleh tim **GOTHRU** (Eqi, Azhar, Tegar). Untuk pertanyaan atau demo, buka Issues atau hubungi via GitHub.
 
 ---
-
-*Catatan: Ganti contoh path gambar (`docs/screenshots/*` dan `docs/images/*`) dengan file yang nyata di repo kamu. Jika butuh, saya bisa bantu buat GIF demo atau pilihan layout foto yang lebih estetis.*
