@@ -10,7 +10,7 @@
 
 ---
 
-## 👥 Tim — GOTHRU
+## 👥 PKL — GOTHRU
 
 Anggota:
 
@@ -27,7 +27,7 @@ Anggota:
 **GOTHRU — Aplikasi Penjualan** adalah sistem manajemen penjualan berbasis *Laravel* yang dibuat untuk memudahkan pengelolaan **produk, kategori, supplier, penjualan, dan pembelian**. Sistem ini menerapkan **role-based access control** (Admin & Karyawan) sehingga hak akses dapat dibedakan.
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=3B82F6&center=true&vCenter=true&width=700&lines=Selamat+Datang+di+GOTHRU;Kelola+Produk%2C+Penjualan%2C+Pembelian+dengan+Mudah;Role+%3A+Admin+dan+Karyawan" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=3B82F6&center=true&vCenter=true&width=700&lines=Selamat+Datang+di+Aplikasi+Penjualan;Kelola+Produk%2C+Penjualan%2C+Pembelian+dengan+Mudah;Role+%3A+Admin+dan+Karyawan" alt="Typing SVG" />
 </p>
 
 <p align="center">
@@ -52,11 +52,11 @@ Anggota:
 
 | Bagian   | Teknologi                          |
 | -------- | ---------------------------------- |
-| Backend  | Laravel 10, Eloquent ORM           |
+| Backend  | Laravel 12, Eloquent ORM           |
 | Frontend | Blade, Bootstrap 5, Chart.js       |
 | Database | MySQL / MariaDB                    |
-| Tools    | Composer, NPM, Carbon, Breeze Auth |
-
+| Tools    | Composer, NPM, Carbon, Breeze Auth,|
+           | Viscode, dan github                |
 ---
 
 ## 🖼️ Foto & GIF (petunjuk)
