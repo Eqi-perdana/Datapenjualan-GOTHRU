@@ -13,7 +13,7 @@
 
                     <!-- Nama Kategori -->
                     <div class="form-group mb-3">
-                        <label class="font-weight-bold">NAMA KATEGORI</label>
+                        <label class="font-weight-bold">NAME</label>
                         <input type="text" 
                                class="form-control @error('name') is-invalid @enderror" 
                                name="name" 
@@ -26,7 +26,7 @@
 
                     <!-- Deskripsi -->
                     <div class="form-group mb-3">
-                        <label class="font-weight-bold">DESKRIPSI</label>
+                        <label class="font-weight-bold">DESCRIPTION</label>
                         <textarea id="description" 
                                   class="form-control @error('description') is-invalid @enderror" 
                                   name="description" 

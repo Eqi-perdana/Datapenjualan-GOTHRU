@@ -13,7 +13,7 @@
                         @method('PUT')
 
                         <div class="form-group mb-3">
-                            <label class="font-weight-bold">PEMASOK</label>
+                            <label class="font-weight-bold">SUPPLIER</label>
                             <select name="supplier_id" class="form-control @error('supplier_id') is-invalid @enderror">
                                 <option value="">-- Pilih Supplier --</option>
                                 @foreach ($suppliers as $supplier)
@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label class="font-weight-bold">PENGGUNA</label>
+                            <label class="font-weight-bold">USER</label>
                             <select name="user_id" class="form-control @error('user_id') is-invalid @enderror">
                                 <option value="">-- Pilih User --</option>
                                 @foreach ($users as $user)

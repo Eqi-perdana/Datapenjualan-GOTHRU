@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="icon" href="./user.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +14,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
         }
 
         .login-container {
@@ -79,33 +77,9 @@
             margin-bottom: 15px;
             font-size: 14px;
         }
-
-        /* Tombol Home pojok kanan atas (dibesarkan) */
-        .home-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 15px 30px;  /* lebih besar */
-            background: #1cc88a;
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;  /* teks lebih besar */
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .home-btn:hover {
-            background: #17a673;
-        }
     </style>
 </head>
 <body>
-
-    <!-- Tombol Home pojok kanan atas -->
-    <a href="/" class="home-btn">Home</a>
 
     <div class="login-container">
         <h2>Login</h2>
@@ -117,25 +91,25 @@
         @endif
 
         <form method="POST" action="/login" autocomplete="off">
-            @csrf
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email"
-                       name="email"
-                       value="{{ old('email') }}"
-                       required
-                       autocomplete="off"
-                       autofocus>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password"
-                       name="password"
-                       required
-                       autocomplete="new-password">
-            </div>
-            <button type="submit">Login</button>
-        </form>
+    @csrf
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" 
+               name="email" 
+               value="{{ old('email') }}" 
+               required 
+               autocomplete="off"
+               autofocus>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" 
+               name="password" 
+               required 
+               autocomplete="new-password">
+    </div>
+    <button type="submit">Login</button>
+</form>
     </div>
 
 </body>

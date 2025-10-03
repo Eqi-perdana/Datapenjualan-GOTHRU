@@ -81,7 +81,7 @@
     {{-- Filter --}}
     <div class="row mt-4">
         <div class="col-md-5">
-            <form method="GET" action="{{ route('dashboard') }}" class="form-inline mb-3">
+            <form method="GET" action="{{ route('penjualan.dashboard') }}" class="form-inline mb-3">
                 <label class="mr-2">Tahun:</label>
                 <select name="year" class="form-control mr-2" onchange="this.form.submit()">
                     @foreach ($years as $y)
@@ -117,21 +117,17 @@
         </div>
     </div>
 
-   {{-- Grafik --}}
-<div class="row">
-    <div class="col-md-12">
-        <div class="card shadow-sm border-0">
-            <div class="card-header bg-white text-center">
-                <h5 class="mb-0">{{ $chartTitle ?? 'Statistik Penjualan' }}</h5>
-            </div>
-            <div class="card-body">
-                <div class="chart-container" style="position: relative; height:40vh; width:100%; overflow-x:auto;">
-                    <canvas id="salesChart"></canvas>
+    {{-- Grafik --}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ $chartTitle ?? 'Statistik Penjualan' }}</h5>
+                    <canvas id="salesChart" height="100"></canvas>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     {{-- Tabel Ringkasan --}}
     <div class="row mt-4">
@@ -183,6 +179,7 @@
     const omzet = @json($omzet);
     const transaksiRaw = @json($transaksi);
 
+    // pastikan jadi angka
     const transaksi = Array.isArray(transaksiRaw) ? transaksiRaw.map(v => Number(v)) : [];
     const omzetArr = Array.isArray(omzet) ? omzet.map(v => Number(v)) : [];
 
@@ -196,27 +193,29 @@
             labels: labels,
             datasets: [
                 {
-                    label: 'Jumlah Transaksi',
-                    data: transaksi,
-                    backgroundColor: 'rgba(255, 159, 64, 0.7)',
-                    borderColor: 'rgba(255, 159, 64, 1)',
-                    borderWidth: 1,
-                    yAxisID: 'y',
-                },
-               
+                    label: 'Total Omzet (Rp)',
+                    data: omzetArr,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    yAxisID: 'y1',
+                }
             ]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
             interaction: { mode: 'index', intersect: false },
             scales: {
+                // sumbu kiri: jumlah transaksi (integer, max = nilai nyata)
                 y: {
                     beginAtZero: true,
-                    max: maxTrans,
+                    max: maxTrans,         // pastikan tick atas = max transaksi
+                    grace: 0,              // matikan padding otomatis
                     title: { display: true, text: 'Jumlah Transaksi' },
-                    ticks: { precision: 0, stepSize: 1 }
+                    ticks: {
+                        precision: 0,
+                        stepSize: 1         // tick per 1 unit (1,2,3,...)
+                    }
                 },
+                // sumbu kanan: omzet (tetap sesuai data asli)
                 y1: {
                     position: 'right',
                     title: { display: true, text: 'Total Omzet (Rp)' },
@@ -232,10 +231,7 @@
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            if (context.dataset.label.includes('Omzet')) {
-                                return context.dataset.label + ': ' + formatRupiah(context.parsed.y);
-                            }
-                            return context.dataset.label + ': ' + context.parsed.y;
+                            return context.dataset.label + ': ' + formatRupiah(context.parsed.y);
                         }
                     }
                 },

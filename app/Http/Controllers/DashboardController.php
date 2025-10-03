@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\Supplier;
 use App\Models\Product;
@@ -17,8 +17,6 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $user = Auth::user();
-
         // Range tahun 2025 - 2070
         $years = range(2025, 2070);
 
@@ -144,24 +142,10 @@ class DashboardController extends Controller
         $transaksi = $stats->pluck('total_transaksi');
         $omzet = $stats->pluck('total_omzet');
 
-        // 🔑 Semua user tetap pakai /dashboard
-        if ($user->role === 'admin') {
-            return view('penjualan.dashboard', compact(
-                'years', 'selectedYear', 'selectedMonth', 'selectedWeek',
-                'weeks', 'stats', 'labels', 'transaksi', 'omzet', 'chartTitle',
-                'categories', 'suppliers', 'products', 'purchases', 'sales', 'histories', 'stocklogs'
-            ));
-        }
-
-        if ($user->role === 'karyawan') {
-            return view('penjualan.dashboard', compact(
-                'years', 'selectedYear', 'selectedMonth', 'selectedWeek',
-                'weeks', 'stats', 'labels', 'transaksi', 'omzet', 'chartTitle',
-                'categories', 'suppliers', 'products', 'purchases', 'sales', 'histories', 'stocklogs'
-            ));
-        }
-
-        // default jika role tidak dikenali
-        abort(403, 'Akses ditolak');
+        return view('penjualan.dashboard', compact(
+            'years', 'selectedYear', 'selectedMonth', 'selectedWeek',
+            'weeks', 'stats', 'labels', 'transaksi', 'omzet', 'chartTitle',
+            'categories', 'suppliers', 'products', 'purchases', 'sales', 'histories', 'stocklogs'
+        ));
     }
 }

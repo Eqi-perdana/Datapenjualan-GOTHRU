@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SupplierController;
@@ -14,7 +14,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StocklogController;
 
 // resource routes
-Route::middleware(['auth'])->group(function () {
 Route::resource('/products', ProductController::class);
 Route::resource('/categories', CategoryController::class);
 Route::resource('/suppliers', SupplierController::class);
@@ -22,25 +21,17 @@ Route::resource('/sales', SaleController::class);
 Route::resource('/purchases', PurchaseController::class);
 Route::resource('/product_price_history', ProductPriceHistoryController::class);
 Route::resource('/stocklogs', StocklogController::class);
-});
-
-// Dashboard Admin
-   Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('dashboard');
-
-// // Dashboard Karyawan
-//     Route::get('/dashboard', [KaryawanDashboardController::class, 'index'])
-//     ->name('karyawan.dashboard');
 
 
-    Route::get('/', function () {
-    return view('welcome'); // halaman utama sebelum login
-    });
+// ✅ Dashboard route (pakai controller + auth middleware)
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('penjualan.dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 // login & logout
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
