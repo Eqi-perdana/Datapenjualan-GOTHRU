@@ -14,7 +14,7 @@
 
                         {{-- Category --}}
                         <div class="form-group mb-3">
-                            <label class="font-weight-bold">CATEGORY</label>
+                            <label class="font-weight-bold">KATEGORI</label>
                             <select name="id_category" class="form-control @error('id_category') is-invalid @enderror">
                                 <option value="">-- Pilih Kategori --</option>
                                 @foreach ($categories as $category)
@@ -41,7 +41,7 @@
 
                         {{-- Description --}}
                         <div class="form-group mb-3">
-                            <label class="font-weight-bold">DESCRIPTION</label>
+                            <label class="font-weight-bold">DESKRIPSI</label>
                             <textarea class="form-control @error('description') is-invalid @enderror" 
                                       name="description" rows="5" placeholder="Masukkan Deskripsi Produk">{{ old('description', $product->description) }}</textarea>
                             @error('description')
@@ -51,7 +51,7 @@
 
                         {{-- Unit Items --}}
                         <div class="form-group mb-3">
-                            <label class="font-weight-bold">UNIT ITEMS</label>
+                            <label class="font-weight-bold">SATUAN BARANG</label>
                             <input type="text" class="form-control @error('unit_items') is-invalid @enderror" 
                                    name="unit_items" value="{{ old('unit_items', $product->unit_items) }}" placeholder="Masukkan Satuan Barang">
                             @error('unit_items')
@@ -63,7 +63,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label class="font-weight-bold">PURCHASE PRICE</label>
+                                    <label class="font-weight-bold">HARGA BELI</label>
                                     <input type="number" step="0.01" class="form-control @error('purchase_price') is-invalid @enderror" 
                                            name="purchase_price" value="{{ old('purchase_price', $product->purchase_price) }}" placeholder="Masukkan Harga Beli">
                                     @error('purchase_price')
@@ -73,7 +73,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label class="font-weight-bold">SELLING PRICE</label>
+                                    <label class="font-weight-bold">HARGA JUAL</label>
                                     <input type="number" step="0.01" class="form-control @error('selling_price') is-invalid @enderror" 
                                            name="selling_price" value="{{ old('selling_price', $product->selling_price) }}" placeholder="Masukkan Harga Jual">
                                     @error('selling_price')

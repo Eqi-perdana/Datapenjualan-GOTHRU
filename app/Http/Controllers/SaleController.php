@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class SaleController extends Controller
 {
@@ -23,12 +24,23 @@ class SaleController extends Controller
     /**
      * create
      */
-    public function create(): View
-    {
+   public function create()
+{
+    // Ambil user login
+    $currentUser = Auth::user();
+
+    // Kalau admin → bisa pilih semua user
+    if ($currentUser->role === 'admin') {
         $users = User::all();
-        $products = Product::select('id', 'name_product')->get(); // ✅ pakai name_product
-        return view('sales.create', compact('products', 'users'));
+    } else {
+        // Kalau karyawan → hanya bisa pilih dirinya sendiri
+        $users = User::where('id', $currentUser->id)->get();
     }
+
+    $products = Product::all();
+
+    return view('sales.create', compact('users', 'products'));
+}
 
     /**
      * store

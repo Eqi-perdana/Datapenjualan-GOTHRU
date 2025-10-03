@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Add New Category Barang')
+@section('title', 'Add Category Barang')
 
 @section('content')
 <div class="row">
@@ -12,7 +12,7 @@
 
                     <!-- Nama Kategori -->
                     <div class="form-group mb-3">
-                        <label class="font-weight-bold">CATEGORY NAME</label>
+                        <label class="font-weight-bold">NAMA KATEGORI</label>
                         <input type="text" 
                                name="name" 
                                class="form-control @error('name') is-invalid @enderror"
@@ -25,7 +25,7 @@
 
                     <!-- Deskripsi -->
                     <div class="form-group mb-3">
-                        <label class="font-weight-bold">DESCRIPTION</label>
+                        <label class="font-weight-bold">DESKRIPSI</label>
                         <textarea name="description" 
                                   class="form-control @error('description') is-invalid @enderror"
                                   rows="4" 
