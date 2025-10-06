@@ -8,13 +8,12 @@
         <div class="col-md-8">
             <div class="card border-0 shadow-sm rounded">
                 <div class="card-body">
-                    <h3 class="mb-3">{{ $product->name }}</h3>
+                    <h3 class="mb-3">{{ $product->name_product }}</h3>
                     <hr/>
-                    <p><strong>Kode Produk:</strong> {{ $product->code }}</p>
                     <p><strong>Kategori:</strong> {{ $product->category?->name ?? '-' }}</p>
                     <p><strong>Harga Beli:</strong> {{ 'Rp ' . number_format($product->purchase_price, 2, ',', '.') }}</p>
                     <p><strong>Harga Jual:</strong> {{ 'Rp ' . number_format($product->selling_price, 2, ',', '.') }}</p>
-                    <p><strong>Stok:</strong> {{ $product->stock }}</p>
+                    <p><strong>Stok:</strong> {{ $product->stok }}</p>
                     <hr/>
                     <p><strong>Deskripsi:</strong></p>
                     <div class="bg-light p-3 rounded">

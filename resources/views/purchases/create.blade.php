@@ -15,7 +15,7 @@
 
                         {{-- Supplier --}}
                         <div class="form-group mb-3">
-                            <label for="supplier_id" class="form-label fw-bold">Supplier</label>
+                            <label for="supplier_id" class="form-label fw-bold">Pemasok</label>
                             <select name="supplier_id" id="supplier_id"
                                 class="form-select @error('supplier_id') is-invalid @enderror" required>
                                 <option value="">-- Pilih Supplier --</option>
@@ -35,7 +35,7 @@
 
                         {{-- User --}}
                         <div class="form-group mb-3">
-                            <label for="user_id" class="form-label fw-bold">User</label>
+                            <label for="user_id" class="form-label fw-bold">Pengguna</label>
                             <select name="user_id" id="user_id" class="form-select @error('user_id') is-invalid @enderror"
                                 required>
                                 <option value="">-- Pilih User --</option>
@@ -67,7 +67,7 @@
 
                         {{-- Total Amount --}}
                         <div class="form-group mb-3">
-                            <label for="total_amount" class="form-label fw-bold">Total Amount</label>
+                            <label for="total_amount" class="form-label fw-bold">Total Pembelian</label>
                             <input type="number" name="total_amount" id="total_amount"
                                 class="form-control @error('total_amount') is-invalid @enderror"
                                 placeholder="Masukkan Total Pembelian" value="{{ old('total_amount') }}" min="0"

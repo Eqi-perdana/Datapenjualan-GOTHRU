@@ -3,76 +3,88 @@
 @section('title', 'Data Stock Logs')
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
 
-        <h3 class="text-center my-4">Keluar Masuk Barang</h3>
-        <hr>
-
-        <div class="card border-0 shadow-sm rounded">
-            <div class="card-body">
-
-                <a href="{{ route('stocklogs.create') }}" class="btn btn-success mb-3">TAMBAHKAN</a>
-
-                <table class="table table-bordered">
-                    <thead style="background-color:plum" class="text-center">
-                        <tr>
-                            <th scope="col">PRODUCT</th>
-                            <th scope="col">JENIS TYPE</th>
-                            <th scope="col">JUMLAH</th>
-                            <th scope="col">DESKRIPSI</th>
-                            <th scope="col">DIBUAT</th>
-                            <th scope="col" style="width: 20%">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($stockLogs as $stockLog)
-                            <tr class="text-center">
-                                <td>{{ $stockLog->product->name_product ?? 'Unknown' }}</td>
-                                <td>
-                                    @if ($stockLog->change_type === 'in')
-                                        <span class="badge bg-success">IN</span>
-                                    @else
-                                        <span class="badge bg-danger">OUT</span>
-                                    @endif
-                                </td>
-                                <td>{{ $stockLog->quantity }}</td>
-                                <td>{{ $stockLog->description }}</td>
-                                <td>{{ \Carbon\Carbon::parse($stockLog->stocklog_date)->format('d-m-Y') }}</td>
-                                <td>
-                                    <form onsubmit="return confirm('Apakah Anda yakin ?');" 
-                                          action="{{ route('stocklogs.destroy', $stockLog->id) }}" 
-                                          method="POST" class="d-inline">
-                                        <a href="{{ route('stocklogs.show', $stockLog->id) }}" class="btn btn-sm btn-dark">SHOW</a>
-                                        <a href="{{ route('stocklogs.edit', $stockLog->id) }}" class="btn btn-sm btn-primary">EDIT</a>
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center text-danger">
-                                    Data Stock Logs belum ada.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-
-                <div class="mt-3">
-                    {{ $stockLogs->links() }}
-                </div>
-
+            <div class="text-center mb-4">
+                <h3>Keluar Masuk Barang</h3>
+                <p class="text-muted">Riwayat log pergerakan stok produk</p>
+                <hr>
             </div>
-        </div>
 
+            <div class="card border-0 shadow-sm rounded">
+                <div class="card-body">
+
+                    <a href="{{ route('stocklogs.create') }}" class="btn btn-success btn-sm mb-3">+ Tambahkan</a>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped align-middle text-center mb-0">
+                            <thead style="background-color:plum" class="text-center">
+                                <tr>
+                                    <th>PRODUCT</th>
+                                    <th>JENIS TYPE</th>
+                                    <th>JUMLAH</th>
+                                    <th>DESKRIPSI</th>
+                                    <th>DIBUAT</th>
+                                    <th style="width: 20%">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($stockLogs as $stockLog)
+                                    <tr>
+                                        <td>{{ $stockLog->product->name_product ?? 'Unknown' }}</td>
+                                        <td>
+                                            @if ($stockLog->change_type === 'in')
+                                                <span class="badge bg-success">IN</span>
+                                            @else
+                                                <span class="badge bg-danger">OUT</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $stockLog->quantity }}</td>
+                                        <td>{{ $stockLog->description }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($stockLog->stocklog_date)->format('d-m-Y') }}</td>
+                                        <td>
+                                            <form onsubmit="return confirm('Apakah Anda yakin ?');" 
+                                                  action="{{ route('stocklogs.destroy', $stockLog->id) }}" 
+                                                  method="POST" class="d-inline">
+                                                <a href="{{ route('stocklogs.show', $stockLog->id) }}" 
+                                                   class="btn btn-sm btn-secondary">Lihat</a>
+                                                <a href="{{ route('stocklogs.edit', $stockLog->id) }}" 
+                                                   class="btn btn-sm btn-primary">Edit</a>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center text-danger">
+                                            Data Stock Logs belum ada.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{-- Pagination --}}
+                    @if($stockLogs->hasPages())
+                        <div class="d-flex justify-content-center mt-3">
+                            {{ $stockLogs->links() }}
+                        </div>
+                    @endif
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // SweetAlert notifikasi
@@ -94,4 +106,4 @@
         });
     @endif
 </script>
-@endsection
+@endpush
