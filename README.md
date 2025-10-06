@@ -1,69 +1,190 @@
+# 🚀 GOTHRU — Aplikasi Penjualan
 
-**GOTHRU**
-
-
-
-Anggota 
-
-   ⬇
-
-
-1.Eqi Perdana
-
-
-
-2.Azhar Aulia
-
-
-
-3.Tegar Katresna
-
-# 🚀 Aplikasi Penjualan
-
-Selamat datang di **Aplikasi Penjualan** 🎉  
-Aplikasi ini dibuat menggunakan **Laravel** sebagai backend untuk mengelola data **produk, penjualan, pembelian, dan karyawan** dengan sistem role-based (Admin & Karyawan).  
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-12-red?logo=laravel" alt="Laravel" />
+  <img src="https://img.shields.io/badge/Database-MySQL-blue?logo=mysql" alt="MySQL" />
+  <img src="https://img.shields.io/badge/Frontend-Bootstrap_5-563d7c?logo=bootstrap&logoColor=white" alt="Bootstrap" />
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License" />
+  <img src="https://img.shields.io/badge/Status-Active-success" alt="Status" />
+</p>
 
 ---
 
-## ✨ Fitur Utama
-- 🔑 **Autentikasi & Role** (Admin & Karyawan)
-- 📦 **Manajemen Produk** (CRUD Produk & Kategori)
-- 💰 **Manajemen Penjualan & Pembelian**
-- 📊 **Dashboard Statistik** dengan grafik interaktif
-- 👨‍💼 **Manajemen Karyawan**
-- 🎨 **UI Modern** menggunakan Bootstrap 5
+## 👥 PKL — GOTHRU
+
+Anggota:
+
+1. Eqi Perdana
+2. Azhar Aulia
+3. Tegar Katresna
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
-- [Laravel 10](https://laravel.com/) - Framework PHP
-- [Bootstrap 5](https://getbootstrap.com/) - Frontend UI
-- [MySQL/MariaDB](https://www.mysql.com/) - Database
-- [Carbon](https://carbon.nesbot.com/) - Date & Time Handling
+
+
+## ✨ Ringkasan
+
+**GOTHRU — Aplikasi Penjualan** adalah sistem manajemen penjualan berbasis *Laravel* yang dibuat untuk memudahkan pengelolaan **produk, kategori, supplier, penjualan, dan pembelian**. Sistem ini menerapkan **role-based access control** (Admin & Karyawan) sehingga hak akses dapat dibedakan.
+
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=3B82F6&center=true&vCenter=true&width=700&lines=Selamat+Datang+di+Aplikasi+Penjualan;Kelola+Produk%2C+Penjualan%2C+Pembelian+dengan+Mudah;Role+%3A+Admin+dan+Karyawan" alt="Typing SVG" />
+</p>
+
+<p align="center">
+  <!-- Ganti demo.gif dengan gif demo aplikasi kamu di folder docs/screenshots/ -->
+  <img src="docs/screenshots/demo.gif" alt="Demo Aplikasi" width="780" />
+</p>
 
 ---
 
-## ⚡ Instalasi & Setup
+## 🚀 Fitur Utama
 
-Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi di lokal:
+* 🔐 Autentikasi & Role (Admin & Karyawan)
+* 📦 CRUD Produk, Kategori, Supplier
+* 🧾 Transaksi Penjualan & Pembelian
+* 📊 Dashboard Statistik (Chart.js)
+* 📁 Laporan dan Export data (opsional)
+* 🎨 UI responsif dengan Bootstrap 5
+
+---
+
+## 🛠️ Teknologi
+
+| Bagian   | Teknologi                                              |
+| -------- | ------------------------------------------------------ |
+| Backend  | Laravel 12, Eloquent ORM                               |
+| Frontend | Blade, Bootstrap 5, Chart.js                           |
+| Database | MySQL / MariaDB                                        |
+| Tools    | Composer, NPM, Carbon, Breeze Auth,Viscode, dan github |
+                        
+---
+
+## 📊 Database (ERD)
+
+```mermaid
+erDiagram
+    USERS {
+        int id PK
+        string name
+        string email
+        string password
+        string role
+    }
+
+    CATEGORIES {
+        int id PK
+        string name
+        text description
+    }
+
+    SUPPLIERS {
+        int id PK
+        string name_suppliers
+        string contact
+    }
+
+    PRODUCTS {
+        int id PK
+        string name_product
+        int category_id FK
+        int supplier_id FK
+        double price
+        int stock
+    }
+
+    PURCHASES {
+        int id PK
+        int user_id FK
+        int supplier_id FK
+        date purchase_date
+        double total_amount
+    }
+
+    SALES {
+        int id PK
+        int user_id FK
+        int product_id FK
+        date sale_date
+        double total_amount
+        string payment_method
+    }
+
+    USERS ||--o{ PURCHASES : melakukan
+    USERS ||--o{ SALES : melakukan
+    CATEGORIES ||--o{ PRODUCTS : memiliki
+    SUPPLIERS ||--o{ PRODUCTS : menyediakan
+    SUPPLIERS ||--o{ PURCHASES : dilibatkan
+    PRODUCTS ||--o{ SALES : dijual
+```
+
+---
+
+## 🏛️ Arsitektur Sistem
+
+```mermaid
+flowchart TD
+    A[User Browser / Mobile] --> B[Laravel Routes]
+    B --> C[Controllers]
+    C --> D[Eloquent Models]
+    D --> E[(MySQL Database)]
+    C --> F[Blade Views / API Response]
+    F --> A
+```
+
+---
+
+## ⚡ Instalasi Singkat
 
 ```bash
-# 1. Clone repository
-git clone https://github.com/username/aplikasi-penjualan.git
-cd aplikasi-penjualan
+# Clone
+git clone https://github.com/username/gothru-aplikasi-penjualan.git
+cd gothru-aplikasi-penjualan
 
-# 2. Install dependency
+# Install dependency
 composer install
 npm install && npm run dev
 
-# 3. Copy file .env
+# Konfigurasi .env
 cp .env.example .env
-
-# 4. Generate app key
 php artisan key:generate
+# Edit .env -> sesuaikan DB_*
 
-# 5. Atur koneksi database di file .env lalu migrate
+# Migrasi & seeder
 php artisan migrate --seed
 
-# 6. Jalankan server lokal
+# Jalankan server
 php artisan serve
+```
+
+Buka: `http://127.0.0.1:8000`
+
+---
+
+## 👥 Role & Hak Akses
+
+| Role         | Hak Akses                                                                                    |
+| ------------ | -------------------------------------------------------------------------------------------- |
+| **Admin**    | CRUD Produk, Kategori, Supplier, User, Penjualan, Pembelian, Stocklog, Product Harga Histori |
+| **Karyawan** | Input Penjualan & Pembelian, Lihat Data Produk                                               |
+
+---
+
+
+## 🤝 Kontribusi
+
+repo ini di colaborasi supaya mempermudah kelompok untuk mengakses reponya dan bisa menambahkan atau mengedit repo nya juga
+
+---
+
+## 📄 Lisensi
+
+MIT License © 2025 — PKL GOTHRU
+
+---
+
+## 📬 Kontak
+
+Dibuat oleh tim PKL **GOTHRU** (Eqi, Azhar, Tegar). Untuk pertanyaan atau demo, buka Issues atau hubungi via GitHub.
+Bisa menghubungi melalui Whatsaapp juga : 083184136574 ini untuk no whatsaap nya
+
+---
