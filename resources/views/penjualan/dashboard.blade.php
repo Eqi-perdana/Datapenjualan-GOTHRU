@@ -219,7 +219,7 @@
                 },
                 y1: {
                     position: 'right',
-                    title: { display: true, text: 'Total Omzet (Rp)' },
+                    title: { display: true, },
                     min: minOmzet,
                     max: maxOmzet,
                     ticks: {
