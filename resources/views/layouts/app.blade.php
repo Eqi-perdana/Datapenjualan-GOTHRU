@@ -1,131 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aplikasi Penjualan</title>
     <link rel="icon" href="{{ asset('shop.png') }}">
 
-    {{-- Bootstrap CSS --}}
-    <link href="{{ asset('asset/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-</head>
-<body>
+    {{-- AdminLTE & Dependencies (CDN) --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    {{-- Navbar --}}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            {{-- Logo / Brand --}}
-            <a class="navbar-brand" href="{{ route('dashboard') }}">
-                @if (auth()->check() && auth()->user()->role === 'admin')
-                    Dashboard Admin
-                @elseif(auth()->check() && auth()->user()->role === 'karyawan')
-                    Dashboard Karyawan
-                @else
-                    Dashboard
-                @endif
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                {{-- Menu kiri --}}
-                <ul class="navbar-nav me-auto">
-                    {{-- Menu khusus admin --}}
-                    @if (auth()->check() && auth()->user()->role === 'admin')
-                        <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link">Kategori</a></li>
-                        <li class="nav-item"><a href="{{ route('suppliers.index') }}" class="nav-link">Pemasok</a></li>
-                        <li class="nav-item"><a href="{{ route('products.index') }}" class="nav-link">Produk</a></li>
-                        <li class="nav-item"><a href="{{ route('purchases.index') }}" class="nav-link">Pembelian</a></li>
-                        <li class="nav-item"><a href="{{ route('sales.index') }}" class="nav-link">Penjualan</a></li>
-                        <li class="nav-item"><a href="{{ route('product_price_history.index') }}" class="nav-link">Histori Harga</a></li>
-                        <li class="nav-item"><a href="{{ route('stocklogs.index') }}" class="nav-link">Stocklog</a></li>
-                    @endif
-
-                    {{-- Menu khusus karyawan --}}
-                    @if (auth()->check() && auth()->user()->role === 'karyawan')
-                        <li class="nav-item"><a href="{{ route('products.index') }}" class="nav-link">Produk</a></li>
-                        <li class="nav-item"><a href="{{ route('sales.index') }}" class="nav-link">Penjualan</a></li>
-                        <li class="nav-item"><a href="{{ route('purchases.index') }}" class="nav-link">Pembelian</a></li>
-                    @endif
-                </ul>
-
-                {{-- Menu kanan (User & Logout) --}}
-                @auth
-                    <div class="d-flex align-items-center gap-2">
-                        <span class="navbar-text text-light me-2">
-                            {{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role) }})
-                        </span>
-
-                        {{-- Logout form tetap POST (CSRF) but button is type="button" --}}
-                        <form id="logout-form" method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="button" id="logout-button" class="btn btn-outline-light btn-sm">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
-                @endauth
-            </div>
-        </div>
-    </nav>
-
-    {{-- Konten Halaman --}}
-    <div class="container mt-4">
-        @yield('content')
-    </div>
-
-    {{-- Bootstrap Bundle JS --}}
-    <script src="{{ asset('asset/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    {{-- SweetAlert2 (CDN) --}}
+    {{-- SweetAlert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    {{-- Script konfirmasi logout --}}
+</head>
+
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+        {{-- Navbar --}}
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left Navbar -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}" class="nav-link font-weight-bold">
+                        @auth
+                            {{ auth()->user()->role === 'admin' ? 'Dashboard Admin' : 'Dashboard Karyawan' }}
+                        @else
+                            Dashboard
+                        @endauth
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Right Navbar -->
+            <ul class="navbar-nav ml-auto">
+                @auth
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            <i class="fa fa-user"></i> {{ auth()->user()->name }} ({{ ucfirst(auth()->user()->role) }})
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="button" id="logout-button" class="btn btn-danger btn-sm">
+                                <i class="fa fa-sign-out-alt"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+                @endauth
+            </ul>
+        </nav>
+
+        {{-- Sidebar --}}
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <a href="{{ route('dashboard') }}" class="brand-link text-center">
+                <span class="brand-text font-weight-bold">Aplikasi Penjualan</span>
+            </a>
+
+            <div class="sidebar">
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview">
+
+                        @if (auth()->check() && auth()->user()->role === 'admin')
+                            <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link"><i class="nav-icon fa fa-list"></i><p>Kategori</p></a></li>
+                            <li class="nav-item"><a href="{{ route('suppliers.index') }}"  class="nav-link"><i class="nav-icon fa fa-truck"></i><p>Pemasok</p></a></li>
+                            <li class="nav-item"><a href="{{ route('products.index') }}"    class="nav-link"><i class="nav-icon fa fa-box"></i><p>Produk</p></a></li>
+                            <li class="nav-item"><a href="{{ route('purchases.index') }}"   class="nav-link"><i class="nav-icon fa fa-cart-plus"></i><p>Pembelian</p></a></li>
+                            <li class="nav-item"><a href="{{ route('sales.index') }}"       class="nav-link"><i class="nav-icon fa fa-cash-register"></i><p>Penjualan</p></a></li>
+                            <li class="nav-item"><a href="{{ route('product_price_history.index') }}" class="nav-link"><i class="nav-icon fa fa-history"></i><p>Histori Harga</p></a></li>
+                            <li class="nav-item"><a href="{{ route('stocklogs.index') }}"   class="nav-link"><i class="nav-icon fa fa-database"></i><p>Stocklog</p></a></li>
+                        @elseif(auth()->check() && auth()->user()->role === 'karyawan')
+                            <li class="nav-item"><a href="{{ route('products.index') }}"    class="nav-link"><i class="nav-icon fa fa-box"></i><p>Produk</p></a></li>
+                            <li class="nav-item"><a href="{{ route('sales.index') }}"       class="nav-link"><i class="nav-icon fa fa-cash-register"></i><p>Penjualan</p></a></li>
+                            <li class="nav-item"><a href="{{ route('purchases.index') }}"   class="nav-link"><i class="nav-icon fa fa-cart-plus"></i><p>Pembelian</p></a></li>
+                        @endif
+
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        {{-- Content --}}
+        <div class="content-wrapper p-3">
+            @yield('content')
+        </div>
+
+        {{-- Footer --}}
+        <footer class="main-footer text-center">
+            <small>© 2025 Aplikasi Penjualan</small>
+        </footer>
+    </div>
+
+    {{-- JS Dependencies --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
     <script>
-        (function () {
-            const logoutBtn = document.getElementById('logout-button');
-            const logoutForm = document.getElementById('logout-form');
-
-            if (!logoutBtn || !logoutForm) return;
-
-            logoutBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                // Jika SweetAlert2 tersedia, gunakan modal yang lebih bagus
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        title: 'Apakah Anda yakin ingin logout?',
-                        text: "Anda akan keluar dari aplikasi.",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Ya, logout',
-                        cancelButtonText: 'Batal',
-                        reverseButtons: true
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            logoutForm.submit();
-                        }
-                    });
-                    return;
-                }
-
-                // Fallback sederhana jika SweetAlert2 gagal dimuat
-                if (confirm('Apakah Anda yakin ingin logout?')) {
-                    logoutForm.submit();
+        // Konfirmasi Logout
+        document.getElementById('logout-button')?.addEventListener('click', function () {
+            Swal.fire({
+                title: 'Yakin logout?',
+                text: "Anda akan keluar dari aplikasi.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, logout',
+                cancelButtonText: 'Batal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
                 }
             });
-        })();
+        });
     </script>
 
-    {{-- Tempat untuk script tambahan tiap halaman --}}
     @yield('scripts')
 
-    <!-- Footer -->
-    <footer class="text-center" style="margin-top: 30px; padding: 15px 0; background-color: #f8f9fa;">
-        <p style="margin: 0;">© 2025 Aplikasi Penjualan</p>
-    </footer>
 </body>
 </html>
